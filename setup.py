@@ -24,6 +24,7 @@ setup(name='puget.batshitcrazy',
       install_requires=[
           'setuptools',
           'plone.api',
+          'plone.dexterity',
       ],
       extras_require={
       },
