@@ -1,0 +1,27 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="puget.batshitcrazy">
+
+  <five:registerPackage package="." initialize=".initialize" />
+
+  <genericsetup:registerProfile
+      name="default"
+      title="puget.batshitcrazy"
+      directory="profiles/default"
+      description="Install this bat shit crazy package"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      /> 
+      
+  <genericsetup:registerProfile
+      name="uninstall"
+      title="puget.batshitcrazy Uninstall Profile"
+      directory="profiles/uninstall"
+      description="Uninstall this bat shit crazy package"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+</configure>
