@@ -25,7 +25,6 @@ class SerializeToJson(BrowserView):
                'modfied': str(item.modification_date),
         }
         fields = item.asDictionary(checkConstraints=True)
-
         self.request.response.setHeader('Content-Type',
                                         'application/json; charset=utf-8')
         marshall = {
