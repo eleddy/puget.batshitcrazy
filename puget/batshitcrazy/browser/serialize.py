@@ -1,6 +1,7 @@
 from Products.Five.browser import BrowserView
 from plone.dexterity.interfaces import IDexterityFTI
 from plone.dexterity.utils import getAdditionalSchemata
+from plone.namedfile.file import NamedBlobImage
 from zope.component import queryUtility
 from zope.component import getAdapter
 from zope.component import ComponentLookupError
@@ -13,7 +14,6 @@ class SerializeToJson(BrowserView):
     """Serialize a Dexterity content type to JSON
     """
     def __call__(self):
-        import pdb;pdb.set_trace()
         item = self.context
         meta = {'type': item.portal_type,
                'id': item.id,
@@ -43,5 +43,9 @@ class IsoDateTimeEncoder(json.JSONEncoder):
             isinstance(obj, datetime.date):
             # standard JSON time format
             return obj.isoformat()
+        elif isinstance(obj, NamedBlobImage):
+            # ideally this actually resturns url but given that the
+            # caller alerady has context, they can do it for now
+            return obj.filename
 
         return json.JSONEncoder.default(self, obj)
