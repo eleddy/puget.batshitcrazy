@@ -24,29 +24,7 @@ class SerializeToJson(BrowserView):
                # DateTime is not JSON serializable
                'modfied': str(item.modification_date),
         }
-        # ??? indicate version of schema and schema name
-        # look up the base schema
-        fti = queryUtility(IDexterityFTI, name=item.portal_type)
-        model = fti.lookupModel()
-        schema = model.schema
-        fields = {}
-        for name in schema.names():
-            # don't barf on missing/bad attrs
-            value = getattr(item, name, '')
-            fields[name] = value
-
-        # look up activated behavior schemas
-        for b_schema in getAdditionalSchemata(context=item):
-            try:
-                # behaviors have adapters for accessors
-                access = getAdapter(item, b_schema)
-                for name in b_schema._v_attrs.keys():
-                    # then.... is getattr correct?
-                    fields[name] = getattr(access, name, '')
-            except ComponentLookupError, e:
-                logging.debug("Couldn't find adapter for %s with schema %s " %
-                              item, b_schema)
-                pass
+        fields = item.asDictionary()
 
         # check security
 
@@ -60,7 +38,6 @@ class SerializeToJson(BrowserView):
 
 
 class IsoDateTimeEncoder(json.JSONEncoder):
-
     def default(self, obj):
         if isinstance(obj, datetime.datetime) or \
             isinstance(obj, datetime.date):
