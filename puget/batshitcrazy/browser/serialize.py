@@ -24,7 +24,7 @@ class SerializeToJson(BrowserView):
                # DateTime is not JSON serializable
                'modfied': str(item.modification_date),
         }
-        fields = item.asDictionary()
+        fields = item.asDictionary(checkConstraints=True)
 
         # check security
 
